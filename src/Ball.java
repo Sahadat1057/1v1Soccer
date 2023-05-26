@@ -1,10 +1,19 @@
+import javax.swing.*;
 import java.awt.*;
 
-public class Ball extends Entities {
-    public boolean playerShot = false;
+public class Ball {
+    private int normalSpeed;
+    private int maxSpeed;
+    public Ball (int normalSpeed, int maxSpeed) {
+        this.normalSpeed = normalSpeed;
+        this.maxSpeed = maxSpeed;
+    }
 
-    public Ball (int x, int y) {
-        super(x, y);
-        hitBox = new Rectangle(8, 8, 32, 32);
+    public int getNormalSpeed() {
+        return normalSpeed;
+    }
+
+    public int getMaxSpeed() {
+        return maxSpeed;
     }
 }
