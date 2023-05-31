@@ -11,6 +11,9 @@ public class GameGUI extends JFrame implements KeyListener {
     private JPanel panel;
     private Ball ballSpecs;
     private Net netSpecs;
+    public Image ballImage;
+    public Image netImage;
+    public Image
 
 
     public GameGUI() {
@@ -61,10 +64,13 @@ public class GameGUI extends JFrame implements KeyListener {
                 break;
 
             case 32:
+            /*
              for (int i = 0; i < 10; i++) {
                  int speed = ballSpecs.getMaxSpeed() / 10;
                  ballLabel.setLocation(ballLabel.getX(), ballLabel.getY() - speed);
              }
+             */
+             repaint();
                 break;
             }
 
@@ -72,11 +78,13 @@ public class GameGUI extends JFrame implements KeyListener {
 
         }
 
-
-
-    public void keyReleased(KeyEvent e) {
+    public void paintComponent (Graphics g) {
+        Graphics2D g2D = (Graphics2D) g;
+        g2D.drawImage( , 0, 0, null);
 
     }
+
+
 
 
 }
