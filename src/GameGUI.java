@@ -35,7 +35,7 @@ public class GameGUI extends JFrame implements KeyListener {
         ballLabel.setOpaque(false);
 
         netLabel = new JLabel();
-        netLabel.setBounds(325, 75, 100, 100);
+        netLabel.setBounds(325, 75, 150, 120);
         netLabel.setOpaque(false);
 
 
@@ -45,11 +45,16 @@ public class GameGUI extends JFrame implements KeyListener {
         ball = new ImageIcon(newimg);  // transform it back
         ballLabel.setIcon(ball);
 
+        ballImage = ball.getImage();
+
         ImageIcon net = new ImageIcon("src/Net.png");
         Image image2 = net.getImage();
         Image newimg2 = image2.getScaledInstance(100, 100, java.awt.Image.SCALE_SMOOTH);
         net = new ImageIcon(newimg2);
         netLabel.setIcon(net);
+
+        netImage = net.getImage();
+
 
         fieldLabel.add(ballLabel);
         fieldLabel.add(netLabel);
@@ -79,11 +84,10 @@ public class GameGUI extends JFrame implements KeyListener {
                 break;
 
             case 32:
-            /*
-                 int speed = ballSpecs.getMaxSpeed() / 10;
-                 ballLabel.setLocation(ballLabel.getX(), ballLabel.getY() - speed);
+                int speed = ballSpecs.getMaxSpeed() / 10;
+                ballLabel.setLocation(ballLabel.getX(), ballLabel.getY() - speed);
                 break;
-                */
+
 
             }
 
@@ -91,13 +95,12 @@ public class GameGUI extends JFrame implements KeyListener {
 
         }
 
-        /*
+
     public void paintComponent (Graphics g) {
-        Graphics2D g2D = (Graphics2D) g;
-        g2D.drawImage( , 0, 0, null);
+        g.drawImage( ballImage, 0, 0, this);
 
     }
-    */
+
          public void keyReleased(KeyEvent e){
 
          }
