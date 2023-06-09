@@ -76,7 +76,7 @@ public class GameGUI extends JFrame implements KeyListener {
         recentScoreLabel = new JLabel();
         int recentScore = getMostRecentScoreFromFile();
         recentScoreLabel.setText("Recent Score: " + recentScore);
-        recentScoreLabel.setBounds(630, 30, 70, 10);
+        recentScoreLabel.setBounds(630, 20, 70, 10);
         recentScoreLabel.setFont(new java.awt.Font("Arial", Font.BOLD, 8));
         recentScoreLabel.setForeground(Color.PINK);
         recentScoreLabel.setBackground(Color.BLACK);
