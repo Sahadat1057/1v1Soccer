@@ -6,13 +6,16 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class GameGUI extends JFrame implements KeyListener {
 
     private JLabel ballLabel;
     private JLabel netLabel;
     private JLabel scoreLabel;
-    private JLabel highScoreLabel;
+
+    private JLabel recentScoreLabel;
     private JLabel timerLabel;
 
     private JLabel fieldLabel;
@@ -22,8 +25,9 @@ public class GameGUI extends JFrame implements KeyListener {
 
     private Player player;
 
-    private ArrayList<Integer> scores;
-    private int currentScore;
+    private static ArrayList<Integer> scores;
+
+
 
 
 
@@ -52,7 +56,7 @@ public class GameGUI extends JFrame implements KeyListener {
             }
 
         };
-        timer.schedule(task, 30000);
+        timer.schedule(task, 45000);
 
         scoreLabel = new JLabel("Score: 0");
         scoreLabel.setBounds(630, 0, 40, 10);
@@ -68,12 +72,16 @@ public class GameGUI extends JFrame implements KeyListener {
         timerLabel.setBackground(Color.BLACK);
         timerLabel.setOpaque(true);
 
-        highScoreLabel = new JLabel("High Score: " + getHighestScore() );
-        highScoreLabel.setBounds(630, 20, 70, 10);
-        highScoreLabel.setFont(new java.awt.Font("Arial", Font.BOLD, 8));
-        highScoreLabel.setForeground(Color.YELLOW);
-        highScoreLabel.setBackground(Color.BLACK);
-        highScoreLabel.setOpaque(true);
+
+        recentScoreLabel = new JLabel();
+        int recentScore = getMostRecentScoreFromFile();
+        recentScoreLabel.setText("Recent Score: " + recentScore);
+        recentScoreLabel.setBounds(630, 30, 70, 10);
+        recentScoreLabel.setFont(new java.awt.Font("Arial", Font.BOLD, 8));
+        recentScoreLabel.setForeground(Color.PINK);
+        recentScoreLabel.setBackground(Color.BLACK);
+        recentScoreLabel.setOpaque(true);
+
 
 
 
@@ -104,7 +112,7 @@ public class GameGUI extends JFrame implements KeyListener {
         fieldLabel.add(netLabel);
         fieldLabel.add(scoreLabel);
         fieldLabel.add(timerLabel);
-        fieldLabel.add(highScoreLabel);
+        fieldLabel.add(recentScoreLabel);
 
         ImageIcon field = new ImageIcon("src/Field.png");
         Image image3 = field.getImage();
@@ -177,6 +185,8 @@ public class GameGUI extends JFrame implements KeyListener {
         }
         System.out.println("Score: " + player.getScore());
         scoreLabel.setText("Score: " + player.getScore());
+        scores.add(player.getScore());
+        writeScoresToFile(scores);
         Timer resetPositions = new Timer();
 
         TimerTask taskPositions = new TimerTask() {
@@ -193,8 +203,40 @@ public class GameGUI extends JFrame implements KeyListener {
     public void resetPositions() {
         ballLabel.setLocation(325, 410);
         int netX = (int) (Math.random() * 475);
-        ballLabel.setLocation(netX, 70);
+        netLabel.setLocation(netX, 70);
     }
+
+    public static void writeScoresToFile(ArrayList<Integer> scores) {
+        try {
+            FileWriter writer = new FileWriter("scores.txt");
+            for (int score : scores) {
+                writer.write(score + "\n");
+            }
+            writer.close();
+            System.out.println("Scores successfully written to the file.");
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Error writing scores to the file.");
+        }
+    }
+
+    public static int getMostRecentScoreFromFile() {
+        int mostRecentScore = 0;
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader("scores.txt"));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                mostRecentScore = Integer.parseInt(line);
+            }
+            reader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Error reading scores from the file.");
+        }
+        return mostRecentScore;
+    }
+
+
 
 
 
